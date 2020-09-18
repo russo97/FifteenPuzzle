@@ -1,37 +1,66 @@
 <template>
   <main id="app">
     <div id="content">
-      <div
+      <Tile
         :key="index"
-        class="cell"
-        v-for="(n, index) in 16">
-        {{ n }}
-      </div>
+        :value="val"
+        :index="index"
+        v-for="(val, index) in table" />
     </div>
   </main>
 </template>
 
 <script>
+import Tile from "./components/Tile";
 
 export default {
   name: 'App',
 
   data () {
-    return {};
+    return {
+      table: [],
+      tableSize: 4
+    };
   },
 
-  components: {}
+  beforeMount() {
+    this.table = [...this.getBlankTable(), null];
+  },
+
+  methods: {
+    getBlankTable () {
+      return Array.from({ length: Math.pow(this.tableSize, 2) - 1 }, (item, index) => {
+        return index + 1;
+      });
+    }
+  },
+
+  computed: {
+    isSolvable () {
+      const copy = this.table.slice();
+
+      const inversionsCount = copy.reduce((acc, cur, i) => {
+        return this.table.slice(i).filter(v => cur > v).length;
+      }, 0);
+
+      return inversionsCount % 2 === 0;
+    }
+  },
+
+  components: {
+    Tile
+  }
 }
 </script>
 
 <style lang="scss">
+  @import "../public/mixins.module.scss";
+
   main#app {
     width: 420px;
     height: 420px;
-    display: flex;
     position: relative;
-    align-items: center;
-    justify-content: center;
+    @extend %flex-center;
     background-color: #fff;
     box-shadow: 0 3px 6px -2px #aaa;
 
@@ -40,11 +69,7 @@ export default {
       height: calc(100% - 6px);
       display: grid;
       grid-gap: 3px;
-      grid-template: repeat(4, 1fr) / repeat(4, 1fr);
-
-      .cell {
-        background-color: #F15E5Ebd;
-      }
+      grid-template: repeat(4, 1fr) / repeat(4, 1fr);      
     }
   }
 </style>
