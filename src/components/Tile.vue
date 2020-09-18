@@ -1,7 +1,7 @@
 <template>
-  <div :class="{ 'cell': value }" @click="$emit('move')">
-      <div class="shadow" v-if="value">{{ value }}</div>
-      <div class="number" v-if="value"> {{ value }} </div>
+  <div :class="{'filled': valid}" class="cell move-item" @click="$emit('move')">
+      <div class="shadow" v-if="valid">{{ value }}</div>
+      <div class="number" v-if="valid"> {{ value }} </div>
   </div>
 </template>
 
@@ -9,7 +9,13 @@
 export default {
     name: 'Tile',
 
-    props: ['index', 'value']
+    props: ['index', 'value'],
+
+    computed: {
+        valid () {
+            return typeof this.value !== 'string';
+        }
+    }
 }
 </script>
 
@@ -17,12 +23,19 @@ export default {
     @import "../../public/mixins.module.scss";
 
     .cell {
-        cursor: pointer;
         overflow: hidden;
         position: relative;
         @extend %flex-center;
-        background-color: #F15E5Ebd;
         font-family: 'Pacifico', cursive;
+
+        &-#{move} {
+            transition: all 300ms cubic-bezier(0,.88,.44,1.3);
+        }
+
+        &.filled {
+            cursor: pointer;
+            background-color: #F15E5Ebd;
+        }
 
         .number,
         .shadow {

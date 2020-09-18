@@ -1,13 +1,13 @@
 <template>
   <main id="app">
-    <div id="content" ref="content">
+    <transition-group tag="div" name="cell" id="content">
       <Tile
-        :key="index"
+        :key="val"
         :value="val"
         :index="index"
         @move="moveCell(index)"
         v-for="(val, index) in table" />
-    </div>
+    </transition-group>
   </main>
 </template>
 
@@ -25,7 +25,7 @@ export default {
   },
 
   beforeMount() {
-    this.table = [...this.getBlankTable(), null];
+    this.table = [...this.getBlankTable(), 'EMPTY'];
   },
 
   methods: {
@@ -49,7 +49,7 @@ export default {
     moveCell (index) {
       const canMove = this.canMove(index);
 
-      if (canMove) {
+      if (this.nullIndex !== index && canMove) {
         this.swap(index, this.nullIndex);
       }
     },
@@ -71,7 +71,7 @@ export default {
     },
 
     nullIndex () {
-      return this.table.indexOf(null);
+      return this.table.indexOf('EMPTY');
     },
 
     realTableSize () {
