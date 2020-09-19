@@ -26,6 +26,8 @@ export default {
       table: [],
       timepast: 0,
       tableSize: 4,
+      timestamp: 0,
+      currentTimeStamp: 0
     };
   },
 
@@ -51,6 +53,7 @@ export default {
       const canMove = this.canMove(index);
 
       if (this.nullIndex !== index && canMove) {
+        this.moves += 1;
         this.swap(index, this.nullIndex);
       }
     },

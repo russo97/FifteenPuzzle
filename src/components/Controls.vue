@@ -3,7 +3,7 @@
       <div class="controls_box">
         <button class="newGame">new game</button>
         <div class="controlsInfo">
-            <ControlsInfo :controlinfo="timepast" title="time past" />
+            <ControlsInfo :controlinfo="timepast" title="time past" timetype="true" />
             <ControlsInfo :controlinfo="moves" title="moves" />
         </div>
       </div>
@@ -38,7 +38,6 @@ export default {
       .controls_box {
         width: calc(100% - 4px);
         height: calc(100% - 4px);
-        display: flex;
         @extend %flex-center-space-between;
 
         button.newGame {
@@ -59,8 +58,8 @@ export default {
 
         div.controlsInfo {
           height: 40px;
-          width: calc(100% - 150px);
-          @extend %flex-center-space-evenly;
+          width: calc(100% - 200px);
+          @extend %flex-center-space-between;
         }
       }
     }

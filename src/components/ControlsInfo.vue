@@ -1,7 +1,7 @@
 <template>
   <div class="control_box">
       <span class="box_info">
-          {{ controlinfo }}
+          {{ timetype ? formattedTime : controlinfo }}
       </span>
       <span class="box_title">
           {{ title }}
@@ -13,11 +13,35 @@
 export default {
     name: "ControlsInfo",
 
-    props: ['title', 'controlinfo'],
+    props: ['title', 'controlinfo', 'timetype'],
+
+    methods: {
+        hoursFromSecs (secs) {
+            const hours = Math.floor(secs / 3600);
+
+            return hours;
+        },
+
+        minutesFromSecs (secs) {
+            const minutes = Math.floor(secs % 3600 / 60);
+
+            return minutes;
+        },
+
+        secondsFromSecs (secs) {
+            const seconds = Math.floor(secs % 3600 % 60);
+
+            return seconds;
+        }
+    },
 
     computed: {
         formattedTime () {
-            return 0;
+            const { hoursFromSecs, minutesFromSecs, secondsFromSecs, controlinfo } = this;
+
+            return [hoursFromSecs, minutesFromSecs, secondsFromSecs].map(mapFn => {
+                return String(mapFn(controlinfo)).padStart(2, '0');
+            }).join(':');
         }
     }
 }
@@ -27,7 +51,7 @@ export default {
     @import "../../public/mixins.module.scss";
 
     .control_box {
-        width: 40%;
+        width: 45%;
         height: 100%;
         flex-direction: column;
         background: #f15e5e62;
