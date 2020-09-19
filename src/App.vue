@@ -1,6 +1,6 @@
 <template>
   <main id="app">
-    <Controls />
+    <Controls :moves="moves" :timepast="timepast" />
 
     <transition-group tag="div" name="cell" id="content">
       <Tile
@@ -22,8 +22,10 @@ export default {
 
   data () {
     return {
+      moves: 0,
       table: [],
-      tableSize: 4
+      timepast: 0,
+      tableSize: 4,
     };
   },
 
