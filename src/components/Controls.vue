@@ -1,0 +1,58 @@
+<template>
+    <div id="controls">
+      <div class="controls_box">
+        <button class="newGame">new game</button>
+        <div class="controlsInfo">ok</div>
+      </div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: "Controls",
+
+    props: []
+}
+</script>
+
+<style lang="scss">
+    @import "../../public/mixins.module.scss";
+
+    div#controls {
+      width: 100%;
+      height: 50px;
+      top: -60px;
+      left: 0px;
+      position: absolute;
+      @extend %flex-center;
+      // background-color: red;
+
+      .controls_box {
+        width: calc(100% - 4px);
+        height: calc(100% - 4px);
+        display: flex;
+        @extend %flex-center-space-between;
+
+        button.newGame {
+          width: 120px;
+          height: 40px;
+          border: none;
+          color: #fff;
+          cursor: pointer;
+          padding: 0 13px;
+          font-size: 12pt;
+          line-height: 45px;
+          background: #F15E5Ebd;
+          text-transform: uppercase;
+          box-shadow: 0 2px 4px -1px #aaa;
+          font-family: 'Overpass', sans-serif;
+        }
+
+        div.controlsInfo {
+          height: 40px;
+          width: calc(100% - 130px);
+          background: #fff;
+        }
+      }
+    }
+</style>

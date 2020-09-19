@@ -1,5 +1,7 @@
 <template>
   <main id="app">
+    <Controls />
+
     <transition-group tag="div" name="cell" id="content">
       <Tile
         :key="val"
@@ -13,6 +15,7 @@
 
 <script>
 import Tile from "./components/Tile";
+import Controls from "./components/Controls";
 
 export default {
   name: 'App',
@@ -72,7 +75,8 @@ export default {
   },
 
   components: {
-    Tile
+    Tile,
+    Controls
   }
 }
 </script>
