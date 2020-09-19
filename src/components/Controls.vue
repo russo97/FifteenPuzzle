@@ -2,16 +2,25 @@
     <div id="controls">
       <div class="controls_box">
         <button class="newGame">new game</button>
-        <div class="controlsInfo">ok</div>
+        <div class="controlsInfo">
+            <ControlsInfo />
+            <ControlsInfo />
+        </div>
       </div>
     </div>
 </template>
 
 <script>
+import ControlsInfo from './ControlsInfo';
+
 export default {
     name: "Controls",
 
-    props: []
+    props: [],
+
+    components: {
+        ControlsInfo
+    }
 }
 </script>
 
