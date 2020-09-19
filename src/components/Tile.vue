@@ -1,7 +1,9 @@
 <template>
-  <div :class="{'filled': valid}" class="cell move-item" @click="$emit('move')">
+  <div :class="[{ 'filled': valid }, { 'correctPosition': correctPosition }]" class="cell move-item" @click="$emit('move')">
       <div class="shadow" v-if="valid">{{ value }}</div>
       <div class="number" v-if="valid"> {{ value }} </div>
+      <div class="ball1" v-if="valid"></div>
+      <div class="ball2" v-if="valid"></div>
   </div>
 </template>
 
@@ -14,6 +16,12 @@ export default {
     computed: {
         valid () {
             return typeof this.value !== 'string';
+        },
+
+        correctPosition () {
+            const { index, value } = this;
+
+            return index === value - 1;
         }
     }
 }
@@ -29,7 +37,7 @@ export default {
         font-family: 'Pacifico', cursive;
 
         &-#{move} {
-            transition: all 300ms cubic-bezier(0,.88,.44,1.3);
+            transition: all 200ms ease-in;
         }
 
         &.filled {
@@ -58,6 +66,30 @@ export default {
             font-size: 6rem;
             margin-top: -5px;
             color: #f15e5ebd;
+        }
+
+        &.correctPosition {
+            background-color: #f15e5ed4;
+        }
+
+        .ball1 {
+            width: 75%;
+            height: 75%;
+            top: 8%;
+            left: 8%;
+            position: absolute;
+            border-radius: 50%;
+            background-color: #f15e5e2b;
+        }
+
+        .ball2 {
+            width: 50%;
+            height: 50%;
+            top: 40%;
+            left: 40%;
+            position: absolute;
+            border-radius: 50%;
+            background-color: #f15e5e4a;
         }
     }
 </style>

@@ -30,19 +30,15 @@ export default {
 
   methods: {
     getBlankTable () {
-      return Array.from({ length: this.realTableSize }, (item, index) => {
-        return index + 1;
-      });
+      return Array.from({ length: this.realTableSize }, (item, index) => index + 1);
     },
 
     canMove (cellIndex) {
       const { nullIndex, tableSize: width } = this;
 
       return (
-        (nullIndex % width !== 0 && nullIndex - 1 == cellIndex) ||
-        (nullIndex % width !== width - 1 && cellIndex == nullIndex + 1) ||
-        (nullIndex + width == cellIndex) ||
-        (nullIndex - width == cellIndex)
+        (nullIndex % width !== 0         && cellIndex == nullIndex - 1) || (nullIndex + width == cellIndex) ||
+        (nullIndex % width !== width - 1 && cellIndex == nullIndex + 1) || (nullIndex - width == cellIndex)
       );
     },
 
@@ -63,11 +59,7 @@ export default {
     isSolvable () {
       const copy = this.table.slice();
 
-      const inversionsCount = copy.reduce((acc, cur, i) => {
-        return this.table.slice(i).filter(v => cur > v).length;
-      }, 0);
-
-      return inversionsCount % 2 === 0;
+      return copy.reduce((acc, cur, i) => copy.slice(i).filter(v => cur > v).length, 0) % 2 === 0;
     },
 
     nullIndex () {
