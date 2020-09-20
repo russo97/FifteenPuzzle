@@ -86,6 +86,8 @@ export default {
 
       swap(index, nullIndex);
 
+      console.log(this.howManyTileAreInTheirRightPlaces);
+
       if (moveIndex < 80 || !isSolvable) {
         setTimeout(() => this.shuffleCells(moveIndex + 1), 90);
       } else console.log(moveIndex);
@@ -109,6 +111,12 @@ export default {
 
     realTableSize () {
       return Math.pow(this.tableSize, 2) - 1;
+    },
+
+    howManyTileAreInTheirRightPlaces () {
+      const { table } = this;
+
+      return table.filter((v, i) => v === i + 1 && typeof v !== 'string').length;
     },
 
     nullAdjascentExistingIndex () {
