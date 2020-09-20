@@ -80,16 +80,22 @@ export default {
     },
 
     shuffleCells (moveIndex = 0) {
-      const { random, swap, nullIndex, nullAdjascentExistingIndex: adjEI, isSolvable } = this;
+      const {
+        swap,
+        random,
+        nullIndex,
+        isSolvable,
+        shuffleCells,
+        nullAdjascentExistingIndex: adjEI,
+        howManyTileAreInTheirRightPlaces: correctTiles
+      } = this;
 
       const index = adjEI[random(adjEI.length - 1)];
 
       swap(index, nullIndex);
 
-      console.log(this.howManyTileAreInTheirRightPlaces);
-
-      if (moveIndex < 80 || !isSolvable) {
-        setTimeout(() => this.shuffleCells(moveIndex + 1), 90);
+      if (moveIndex < 80 || !isSolvable || correctTiles > 2) {
+        setTimeout(() => shuffleCells(moveIndex + 1), 70);
       } else console.log(moveIndex);
     },
 
@@ -116,7 +122,7 @@ export default {
     howManyTileAreInTheirRightPlaces () {
       const { table } = this;
 
-      return table.filter((v, i) => v === i + 1 && typeof v !== 'string').length;
+      return table.filter((v, i) => v === i + 1 && typeof v === 'number').length;
     },
 
     nullAdjascentExistingIndex () {
