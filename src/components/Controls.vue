@@ -1,7 +1,9 @@
 <template>
     <div id="controls">
       <div class="controls_box">
-        <button class="newGame" @click="$emit('new-game')">new game</button>
+        <button class="newGame" @click="$emit('new-game')">
+          {{ playing ? "reset game" : "new game" }}
+        </button>
         <div class="controlsInfo">
             <ControlsInfo :controlinfo="timepast" title="time past" timetype="true" />
             <ControlsInfo :controlinfo="moves" title="moves" />
@@ -16,7 +18,7 @@ import ControlsInfo from './ControlsInfo';
 export default {
     name: "Controls",
 
-    props: ['timepast', 'moves'],
+    props: ['timepast', 'moves', 'playing'],
 
     components: {
         ControlsInfo

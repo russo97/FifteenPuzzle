@@ -1,6 +1,6 @@
 <template>
   <main id="app">
-    <Controls :moves="moves" :timepast="timepast" @new-game="newGame" />
+    <Controls :moves="moves" :timepast="timepast" :playing="playing" @new-game="newGame" />
 
     <transition-group tag="div" name="cell" id="content">
       <Tile
@@ -92,12 +92,6 @@ export default {
   components: {
     Tile,
     Controls
-  },
-
-  watch: {
-    playing (cur) {
-      console.log(cur);
-    }
   }
 }
 </script>
