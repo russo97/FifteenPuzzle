@@ -1,6 +1,6 @@
 <template>
   <main id="app">
-    <Controls :moves="moves" :timepast="timepast" />
+    <Controls :moves="moves" :timepast="timepast" @new-game="newGame" />
 
     <transition-group tag="div" name="cell" id="content">
       <Tile
@@ -27,6 +27,7 @@ export default {
       timepast: 0,
       tableSize: 4,
       timestamp: 0,
+      playing: false,
       currentTimeStamp: 0
     };
   },
@@ -50,16 +51,25 @@ export default {
     },
 
     moveCell (index) {
-      const canMove = this.canMove(index);
+      const { canMove, nullIndex, playing, increaseMoves } = this;
 
-      if (this.nullIndex !== index && canMove) {
-        this.moves += 1;
+      if (nullIndex !== index && canMove(index) && playing) {
+        increaseMoves();
+
         this.swap(index, this.nullIndex);
       }
     },
 
     swap (indexA, indexB) {
       this.table[indexA] = this.table.splice(indexB, 1, this.table[indexA])[0];
+    },
+
+    newGame () {
+      this.playing = !this.playing;
+    },
+
+    increaseMoves () {
+      this.moves += 1;
     }
   },
 
@@ -82,6 +92,12 @@ export default {
   components: {
     Tile,
     Controls
+  },
+
+  watch: {
+    playing (cur) {
+      console.log(cur);
+    }
   }
 }
 </script>
