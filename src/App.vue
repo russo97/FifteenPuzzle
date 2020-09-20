@@ -94,7 +94,7 @@ export default {
 
       swap(index, nullIndex);
 
-      if (moveIndex < 80 || !isSolvable || correctTiles > 2) {
+      if (moveIndex < 40 || !isSolvable || correctTiles > 2) {
         setTimeout(() => shuffleCells(moveIndex + 1), 70);
       } else console.log(moveIndex);
     },
