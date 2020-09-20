@@ -37,7 +37,7 @@ export default {
         font-family: 'Pacifico', cursive;
 
         &-#{move} {
-            transition: all 200ms ease-in;
+            transition: all .1s ease-in-out;
         }
 
         &.filled {

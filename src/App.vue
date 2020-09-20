@@ -28,7 +28,8 @@ export default {
       tableSize: 4,
       timestamp: 0,
       playing: false,
-      currentTimeStamp: 0
+      currentTimeStamp: 0,
+      lastMovedIndexes: []
     };
   },
 
@@ -62,10 +63,32 @@ export default {
 
     swap (indexA, indexB) {
       this.table[indexA] = this.table.splice(indexB, 1, this.table[indexA])[0];
+
+      this.lastMovedIndexes = [indexA, indexB];
     },
 
     newGame () {
       this.playing = !this.playing;
+
+      this.shuffleCells();
+    },
+
+    random (min = 0, max) {
+      if (!max) [min, max] = [0, min];
+
+      return Math.floor(Math.random() * (max - min + 1) + min);
+    },
+
+    shuffleCells (moveIndex = 0) {
+      const { random, swap, nullIndex, nullAdjascentExistingIndex: adjEI, isSolvable } = this;
+
+      const index = adjEI[random(adjEI.length - 1)];
+
+      swap(index, nullIndex);
+
+      if (moveIndex < 80 || !isSolvable) {
+        setTimeout(() => this.shuffleCells(moveIndex + 1), 90);
+      } else console.log(moveIndex);
     },
 
     increaseMoves () {
@@ -86,6 +109,28 @@ export default {
 
     realTableSize () {
       return Math.pow(this.tableSize, 2) - 1;
+    },
+
+    nullAdjascentExistingIndex () {
+      const { nullIndex, tableSize, table, lastMovedIndexes } = this;
+
+      const indexes = [
+        nullIndex + tableSize,
+        nullIndex - tableSize
+      ];
+
+      if (nullIndex % tableSize === 0) {
+        indexes.push(nullIndex + 1);
+      } else if (nullIndex % tableSize == tableSize - 1) {
+        indexes.push(nullIndex - 1);
+      } else {
+        indexes.push(
+          nullIndex - 1,
+          nullIndex + 1
+        );
+      }
+
+      return indexes.filter((idx) => table[idx] && lastMovedIndexes.indexOf(idx) < 0);
     }
   },
 
