@@ -68,9 +68,27 @@ export default {
     },
 
     newGame () {
-      this.playing = !this.playing;
+      const { playing, shuffleCells, organizeTable } = this;
 
-      this.shuffleCells();
+      if (playing) {
+        this.playing = false;
+
+        organizeTable();
+
+        return;
+      }
+
+      shuffleCells();
+    },
+
+    organizeTable () {
+      const { nullIndex, table } = this;
+
+      table.splice(nullIndex, 1);
+
+      table.sort((a, b) => a - b);
+
+      table.push('EMPTY');
     },
 
     random (min = 0, max) {
@@ -94,9 +112,12 @@ export default {
 
       swap(index, nullIndex);
 
-      if (moveIndex < 40 || !isSolvable || correctTiles > 2) {
+      if (moveIndex < 40 || correctTiles > 2 || !isSolvable) {
         setTimeout(() => shuffleCells(moveIndex + 1), 70);
-      } else console.log(moveIndex);
+      } else {
+        console.log(moveIndex);
+        this.playing = true;
+      }
     },
 
     increaseMoves () {
