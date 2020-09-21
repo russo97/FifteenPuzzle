@@ -68,12 +68,10 @@ export default {
     },
 
     newGame () {
-      const { playing, shuffleCells, organizeTable } = this;
+      const { playing, shuffleCells } = this;
 
       if (playing) {
         this.playing = false;
-
-        organizeTable();
 
         return;
       }
@@ -166,6 +164,12 @@ export default {
       }
 
       return indexes.filter((idx) => table[idx] && lastMovedIndexes.indexOf(idx) < 0);
+    },
+
+    playerWins () {
+      const { table } = this;
+
+      return table.slice(0, table.length - 1).every((v, i) => v === i + 1);
     }
   },
 
@@ -176,6 +180,13 @@ export default {
       } else {
         this.moves = 0;
         this.timepast = 0;
+        this.organizeTable();
+        clearInterval(this.currentTimeStamp);
+      }
+    },
+
+    moves (current) {
+      if (current > 0 && this.playing && this.playerWins) {
         clearInterval(this.currentTimeStamp);
       }
     }
