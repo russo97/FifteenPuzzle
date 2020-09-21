@@ -169,6 +169,18 @@ export default {
     }
   },
 
+  watch: {
+    playing (current) {
+      if (current) {
+        this.currentTimeStamp = setInterval(() => this.timepast += 1, 1000);
+      } else {
+        this.moves = 0;
+        this.timepast = 0;
+        clearInterval(this.currentTimeStamp);
+      }
+    }
+  },
+
   components: {
     Tile,
     Controls
