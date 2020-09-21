@@ -52,9 +52,9 @@ export default {
     },
 
     moveCell (index) {
-      const { canMove, nullIndex, playing, increaseMoves } = this;
+      const { canMove, nullIndex, playing, increaseMoves, playerWins } = this;
 
-      if (nullIndex !== index && canMove(index) && playing) {
+      if (nullIndex !== index && canMove(index) && playing && !playerWins) {
         increaseMoves();
 
         this.swap(index, this.nullIndex);
