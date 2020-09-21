@@ -106,20 +106,22 @@ export default {
         howManyTileAreInTheirRightPlaces: correctTiles
       } = this;
 
-      const index = adjEI[random(adjEI.length - 1)];
-
-      swap(index, nullIndex);
+      swap(adjEI[random(adjEI.length - 1)], nullIndex);
 
       if (moveIndex < 40 || correctTiles > 2 || !isSolvable) {
         setTimeout(() => shuffleCells(moveIndex + 1), 70);
       } else {
-        console.log(moveIndex);
         this.playing = true;
       }
     },
 
     increaseMoves () {
       this.moves += 1;
+    },
+
+    clearTimeAndMoves () {
+      this.moves = 0;
+      this.timepast = 0;
     }
   },
 
@@ -175,18 +177,24 @@ export default {
 
   watch: {
     playing (current) {
+      const { clearTimeAndMoves, organizeTable } = this;
+
       if (current) {
+        clearTimeAndMoves();
         this.currentTimeStamp = setInterval(() => this.timepast += 1, 1000);
       } else {
-        this.moves = 0;
-        this.timepast = 0;
-        this.organizeTable();
-        clearInterval(this.currentTimeStamp);
+        if (!this.playerWins) {          
+          organizeTable();
+          clearTimeAndMoves();
+          clearInterval(this.currentTimeStamp);
+        }
       }
     },
 
     moves (current) {
       if (current > 0 && this.playing && this.playerWins) {
+        this.playing = false;
+
         clearInterval(this.currentTimeStamp);
       }
     }
