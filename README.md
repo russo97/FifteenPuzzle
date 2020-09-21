@@ -19,6 +19,4 @@ yarn build
 ```
 yarn lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+[![Netlify Status](https://api.netlify.com/api/v1/badges/6b8c09e7-a6c0-45ce-a609-4296d621b2fa/deploy-status)](https://app.netlify.com/sites/fifteenpuzzle/deploys)
