@@ -1,5 +1,5 @@
 <template>
-  <main id="app">
+  <main id="app" ref="mainbox">
     <Controls :moves="moves" :timepast="timepast" :playing="playing" @new-game="newGame" />
 
     <transition-group tag="div" name="cell" id="content">
@@ -28,6 +28,7 @@ export default {
       tableSize: 4,
       timestamp: 0,
       playing: false,
+      animationTime: 80,
       currentTimeStamp: 0,
       lastMovedIndexes: []
     };
@@ -35,6 +36,14 @@ export default {
 
   beforeMount() {
     this.table = [...this.getBlankTable(), 'EMPTY'];
+  },
+
+  mounted () {
+    this.$refs.mainbox.style = `--width: ${window.innerWidth - 10}px;`;
+
+    window.addEventListener('resize', (e) => {
+      this.$refs.mainbox.style = `--width: ${e.srcElement.innerWidth - 10}px;`;
+    });
   },
 
   methods: {
@@ -57,7 +66,7 @@ export default {
       if (nullIndex !== index && canMove(index) && playing && !playerWins) {
         increaseMoves();
 
-        this.swap(index, this.nullIndex);
+        this.swap(index, nullIndex);
       }
     },
 
@@ -102,6 +111,7 @@ export default {
         nullIndex,
         isSolvable,
         shuffleCells,
+        animationTime,
         nullAdjascentExistingIndex: adjEI,
         howManyTileAreInTheirRightPlaces: correctTiles
       } = this;
@@ -109,7 +119,7 @@ export default {
       swap(adjEI[random(adjEI.length - 1)], nullIndex);
 
       if (moveIndex < 40 || correctTiles > 2 || !isSolvable) {
-        setTimeout(() => shuffleCells(moveIndex + 1), 70);
+        setTimeout(() => shuffleCells(moveIndex + 1), animationTime);
       } else {
         this.playing = true;
       }
@@ -224,6 +234,13 @@ export default {
       display: grid;
       grid-gap: 3px;
       grid-template: repeat(4, 1fr) / repeat(4, 1fr);      
+    }
+  }
+
+  @media screen and (max-width: 430px) {
+    main#app {
+      width: var(--width);
+      height: var(--width);
     }
   }
 </style>

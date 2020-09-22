@@ -45,31 +45,37 @@ export default {
             background-color: #F15E5Ebd;
         }
 
+        &.correctPosition {
+            background-color: #f15e5ed4;
+        }
+
         .number,
         .shadow {
             @extend %full-width, %flex-center;
             top: 0px;
             left: 0px;
+            font-size: 4rem;
             position: absolute;
         }
 
         .number {
             z-index: 2;
             color: #fff;
-            font-size: 6rem;
             margin-top: -10px;
         }
 
         .shadow {
             z-index: 1;
-            font-weight: bold;
-            font-size: 6rem;
             margin-top: -5px;
+            font-weight: bold;
             color: #f15e5ebd;
         }
 
-        &.correctPosition {
-            background-color: #f15e5ed4;
+
+        .ball1,
+        .ball2 {
+            position: absolute;
+            @include border-radius(50%);
         }
 
         .ball1 {
@@ -77,8 +83,6 @@ export default {
             height: 75%;
             top: 8%;
             left: 8%;
-            position: absolute;
-            border-radius: 50%;
             background-color: #f15e5e2b;
         }
 
@@ -87,8 +91,6 @@ export default {
             height: 50%;
             top: 40%;
             left: 40%;
-            position: absolute;
-            border-radius: 50%;
             background-color: #f15e5e4a;
         }
     }

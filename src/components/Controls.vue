@@ -49,7 +49,7 @@ export default {
           color: #fff;
           cursor: pointer;
           padding: 0 13px;
-          font-size: 12pt;
+          font-size: 1rem;
           line-height: 45px;
           background: #F15E5Ebd;
           text-transform: uppercase;

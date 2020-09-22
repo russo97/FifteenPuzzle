@@ -61,7 +61,7 @@ export default {
 
         .box_info {
             height: 20px;
-            font-size: 12pt;
+            font-size: .9rem;
             line-height: 25px;
             font-weight: bold;
             font-family: 'Overpass', sans-serif;
@@ -69,6 +69,7 @@ export default {
 
         .box_title {
             color: #791d1d;
+            font-size: .65rem;
             font-family: "Segoe UI";
             text-transform: uppercase;
         }
