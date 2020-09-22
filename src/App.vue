@@ -29,13 +29,15 @@ export default {
       timestamp: 0,
       playing: false,
       animationTime: 80,
+      lastKeyPressed: [],
       currentTimeStamp: 0,
-      lastMovedIndexes: []
+      lastMovedIndexes: [],
     };
   },
 
   beforeMount() {
     this.table = [...this.getBlankTable(), 'EMPTY'];
+
   },
 
   mounted () {
@@ -44,6 +46,11 @@ export default {
     window.addEventListener('resize', (e) => {
       this.$refs.mainbox.style = `--width: ${e.srcElement.innerWidth - 10}px;`;
     });
+
+    // capturando código da tecla para permitir movimento também através delas
+    window.addEventListener('keyup', (e) => {
+      this.lastKeyPressed.push(e.keyCode);
+    }, false);
   },
 
   methods: {
@@ -182,6 +189,21 @@ export default {
       const { table } = this;
 
       return table.slice(0, table.length - 1).every((v, i) => v === i + 1);
+    },
+
+    keyMap () {
+      const { nullIndex, tableSize } = this;
+
+      return {
+        '37': nullIndex + 1,
+        '65': nullIndex + 1,
+        '39': nullIndex - 1,
+        '68': nullIndex - 1,
+        '87': nullIndex + tableSize,
+        '38': nullIndex + tableSize,
+        '83': nullIndex - tableSize,
+        '40': nullIndex - tableSize
+      };
     }
   },
 
@@ -206,6 +228,18 @@ export default {
         this.playing = false;
 
         clearInterval(this.currentTimeStamp);
+      }
+    },
+
+    lastKeyPressed (current) {
+      const { table, keyMap, moveCell, lastKeyPressed } = this;
+
+      if (current.length) {
+        const index = keyMap[lastKeyPressed.splice(0, 1)[0]];
+
+        if (Number.isInteger(index) && table[index]) {
+          moveCell(index);
+        }
       }
     }
   },
