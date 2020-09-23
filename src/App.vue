@@ -11,7 +11,7 @@
         v-for="(val, index) in table" />
     </transition-group>
 
-    <Settings />
+    <Settings v-model.number="animationTime" />
   </main>
 </template>
 
@@ -70,12 +70,12 @@ export default {
     },
 
     moveCell (index) {
-      const { canMove, nullIndex, playing, increaseMoves, playerWins } = this;
+      const { canMove, nullIndex, playing, increaseMoves, playerWins, swap } = this;
 
       if (nullIndex !== index && canMove(index) && playing && !playerWins) {
         increaseMoves();
 
-        this.swap(index, nullIndex);
+        swap(index, nullIndex);
       }
     },
 
