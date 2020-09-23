@@ -10,12 +10,15 @@
         @move="moveCell(index)"
         v-for="(val, index) in table" />
     </transition-group>
+
+    <Settings />
   </main>
 </template>
 
 <script>
 import Tile from "./components/Tile";
 import Controls from "./components/Controls";
+import Settings from "./components/Settings";
 
 export default {
   name: 'App',
@@ -37,7 +40,6 @@ export default {
 
   beforeMount() {
     this.table = [...this.getBlankTable(), 'EMPTY'];
-
   },
 
   mounted () {
@@ -246,7 +248,8 @@ export default {
 
   components: {
     Tile,
-    Controls
+    Controls,
+    Settings
   }
 }
 </script>

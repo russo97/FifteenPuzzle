@@ -56,6 +56,11 @@ export default {
           @include border-radius(3px);
           box-shadow: 0 2px 4px -1px #aaa;
           font-family: 'Overpass', sans-serif;
+
+          &:active {
+            box-shadow: unset;
+            transform: scale(.99);
+          }
         }
 
         div.controlsInfo {
