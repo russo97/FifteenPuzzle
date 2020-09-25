@@ -2,6 +2,8 @@
   <main id="app" ref="mainbox">
     <Controls :moves="moves" :timepast="timepast" :playing="playing" @new-game="newGame" />
 
+    <WinScreen />
+
     <transition-group tag="div" name="cell" id="content">
       <Tile
         :key="val"
@@ -19,6 +21,7 @@
 import Tile from "./components/Tile";
 import Controls from "./components/Controls";
 import Settings from "./components/Settings";
+import WinScreen from "./components/WinScreen";
 
 export default {
   name: 'App',
@@ -249,7 +252,8 @@ export default {
   components: {
     Tile,
     Controls,
-    Settings
+    Settings,
+    WinScreen
   }
 }
 </script>
