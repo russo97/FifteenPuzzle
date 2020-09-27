@@ -1,10 +1,14 @@
 <template>
   <main id="app" ref="mainbox">
-    <Controls :moves="moves" :timepast="timepast" :playing="playing" @new-game="newGame" />
+    <Controls
+      :moves="moves"
+      :playing="playing"
+      :timepast="timepast"
+      @new-game="newGame" />
 
-    <WinScreen />
+    <WinScreen :winner="playerWins" />
 
-    <transition-group tag="div" name="cell" id="content">
+    <transition-group tag="div" name="cell" id="content" :class="{ 'playerWins': playerWins }">
       <Tile
         :key="val"
         :value="val"
@@ -191,9 +195,9 @@ export default {
     },
 
     playerWins () {
-      const { table } = this;
+      const { table, moves } = this;
 
-      return table.slice(0, table.length - 1).every((v, i) => v === i + 1);
+      return table.slice(0, table.length - 1).every((v, i) => v === i + 1) && moves > 0;
     },
 
     keyMap () {
@@ -269,12 +273,17 @@ export default {
     background-color: #fff;
     box-shadow: 0 3px 6px -2px #aaa;
 
+    .playerWins {
+      filter: blur(5px);
+      transition: all 300ms ease-in;
+    }
+
     div#content {
       width: calc(100% - 6px);
       height: calc(100% - 6px);
       display: grid;
       grid-gap: 3px;
-      grid-template: repeat(4, 1fr) / repeat(4, 1fr);      
+      grid-template: repeat(4, 1fr) / repeat(4, 1fr);
     }
   }
 

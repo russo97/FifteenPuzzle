@@ -23,6 +23,7 @@ body { height: 100%; }
 
 body {
     display: flex;
+    overflow: hidden;
     position: relative;
     align-items: center;
     justify-content: center;
