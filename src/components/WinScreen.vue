@@ -1,5 +1,5 @@
 <template>
-  <div id="winScreen" :class="{ 'winner': winner }" @click="evt => winner = !winner">
+  <div id="winScreen" :class="{ 'winner': winner }">
       <div class="winnerBox" :class="{ 'winner': winner }">
           amazing
       </div>
