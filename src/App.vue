@@ -203,7 +203,7 @@ export default {
     keyMap () {
       const { nullIndex, tableSize } = this;
 
-      return {
+      return Object.freeze({
         '37': nullIndex + 1,
         '65': nullIndex + 1,
         '39': nullIndex - 1,
@@ -212,7 +212,7 @@ export default {
         '38': nullIndex + tableSize,
         '83': nullIndex - tableSize,
         '40': nullIndex - tableSize
-      };
+      });
     }
   },
 
